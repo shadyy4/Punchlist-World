@@ -183,4 +183,61 @@ function generatePDF() {
 }
 
 // Iniciar app
+async function generatePDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let page = 0;
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+
+    if (i > 0) doc.addPage();
+    page++;
+
+    doc.setFontSize(14);
+    doc.text(`Punchlist Item #${i + 1}`, 15, 20);
+
+    doc.setFontSize(11);
+    const fields = [
+      [`Descripción:`, item.description],
+      [`Room:`, item.room],
+      [`Service:`, item.service],
+      [`Priority:`, getPriorityLabel(item.priority)],
+      [`Assign To:`, item.assignTo],
+      [`Date:`, item.date],
+      [`Status:`, item.status],
+      [`Comments:`, item.comments],
+    ];
+
+    let y = 30;
+    fields.forEach(([label, value]) => {
+      doc.text(`${label} ${value}`, 15, y);
+      y += 8;
+    });
+
+    // Añadir imágenes (si hay)
+    if (item.images && item.images.length > 0) {
+      y += 4;
+      doc.setFontSize(12);
+      doc.text("Fotos:", 15, y);
+      y += 4;
+
+      const imgWidth = 60;
+      const imgHeight = 45;
+      let x = 15;
+
+      for (let j = 0; j < item.images.length; j++) {
+        if (j > 0 && j % 3 === 0) {
+          y += imgHeight + 5;
+          x = 15;
+        }
+        doc.addImage(item.images[j], 'JPEG', x, y, imgWidth, imgHeight);
+        x += imgWidth + 5;
+      }
+    }
+  }
+
+  doc.save(`Punchlist_Report_Page${page}.pdf`);
+}
+
 renderTable();
