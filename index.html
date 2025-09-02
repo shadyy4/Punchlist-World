@@ -89,4 +89,19 @@
   <script src="libs/jspdf.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
+  <!-- Modal para editar imagen -->
+<div id="editor-modal" class="hidden">
+  <div class="editor-container">
+    <h3>🖍️ Editor de Imagen</h3>
+    <canvas id="editor-canvas" width="500" height="400"></canvas>
+    <div class="toolbar">
+      <button onclick="enableFreeDraw()">✏️ Dibujar</button>
+      <button onclick="addText()">🔤 Texto</button>
+      <input type="color" id="colorPicker" value="#ff0000" />
+      <button onclick="saveEditedImage()">✅ Guardar</button>
+      <button onclick="closeEditor()">❌ Cancelar</button>
+    </div>
+  </div>
+</div>
+
 </html>
