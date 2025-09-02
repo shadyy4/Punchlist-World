@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Punchlist App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>📋 Punchlist</h1>
+    <button onclick="showForm()">➕ Nuevo Ítem</button>
+    <button onclick="generatePDF()">📄 Exportar PDF</button>
+  </header>
+
+  <!-- 📸 Subir fotos y formulario -->
+  <section id="form-section" class="hidden">
+    <h2>Nuevo Ítem</h2>
+    <label>Fotos (máx 4):</label>
+    <input type="file" accept="image/*" multiple onchange="handleImages(event)" />
+    <div id="image-preview"></div>
+
+    <label>Descripción:</label>
+    <textarea id="description"></textarea>
+
+    <label>Room:</label>
+    <input type="text" id="room" />
+
+    <label>Service:</label>
+    <input type="text" id="service" />
+
+    <label>Priority:</label>
+    <select id="priority">
+      <option value="1">1 - Critical Item (Safety Issue)</option>
+      <option value="2">2 - Serious</option>
+      <option value="3">3 - Minor</option>
+      <option value="4">4 - Design Issue</option>
+    </select>
+
+    <label>Assign To:</label>
+    <input type="text" id="assignTo" />
+
+    <label>Date:</label>
+    <input type="date" id="date" />
+
+    <label>Comments:</label>
+    <textarea id="comments"></textarea>
+
+    <label>Estado:</label>
+    <button id="status-btn" onclick="toggleStatus()">Pending</button>
+
+    <button onclick="saveItem()">💾 Guardar</button>
+    <button onclick="cancelForm()">❌ Cancelar</button>
+  </section>
+
+  <!-- 📋 Lista de ítems -->
+  <section id="list-section">
+    <h2>Todos los ítems</h2>
+
+    <!-- Filtros -->
+    <div class="filters">
+      <select id="filter-service" onchange="applyFilters()"></select>
+      <select id="filter-priority" onchange="applyFilters()"></select>
+      <select id="filter-assign" onchange="applyFilters()"></select>
+    </div>
+
+    <!-- Tabla de ítems -->
+    <table id="items-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Room</th>
+          <th>Service</th>
+          <th>Priority</th>
+          <th>Assign To</th>
+          <th>Estado</th>
+          <th>Descripción</th>
+          <th>Fotos</th>
+          <th>Editar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Aquí se insertan los ítems dinámicamente -->
+      </tbody>
+    </table>
+  </section>
+
+  <script src="libs/fabric.min.js"></script>
+  <script src="libs/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
